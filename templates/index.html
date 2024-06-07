@@ -72,7 +72,8 @@
               <div class="col-md-6 form-group" style="text-align: center; margin-bottom: 1%">
                 <label><b>Enter square feet:</b></label>
                 <input type="text" class="form-control" id="total_sqft" name="total_sqft" placeholder="Enter sqft" />
-                <p class="error-message" id="error_message" style="display: none; color: red;">Enter a valid integer value.</p>
+                <p class="error-message" id="error_message" style="display: none; color: red;">Enter a valid integer
+                  value.</p>
               </div>
               <div class="col-md-6 form-group" style="text-align: center; margin-bottom: 3%">
                 <label><b>Number of balcony: </b></label>
@@ -131,7 +132,7 @@
     const totalSqftInput = document.getElementById('total_sqft');
     const errorMessage = document.getElementById('error_message');
 
-    totalSqftInput.addEventListener('input', function() {
+    totalSqftInput.addEventListener('input', function () {
       const value = this.value.trim();
 
       if (!value || isNaN(value) || !Number.isInteger(parseFloat(value))) {
