@@ -18,6 +18,27 @@ pipe = joblib.load("RidgeModel.joblib")
 print(f"Loaded pipeline type: {type(pipe)}")
 
 
+def format_indian_currency(amount):
+    """
+    Format the given amount in Indian numbering system with commas.
+    """
+    s = str(amount)
+    after_point = ""
+    if "." in s:
+        parts = s.split(".")
+        s = parts[0]
+        after_point = "." + parts[1][:2]
+
+    s = s[::-1]
+    result = ""
+    for i in range(len(s)):
+        if i == 3 or (i > 3 and (i - 3) % 2 == 0):
+            result += ","
+        result += s[i]
+
+    return result[::-1] + after_point
+
+
 @app.route("/")
 def index():
     locations = sorted(data["location"].unique())
@@ -58,13 +79,15 @@ def predict():
         prediction = pipe.predict(input_data)
         value = prediction[0] * 1e5
         if value < 0:
-            return "Please increase the square feet: "
+            return "Please increase the square feet!!"
 
         if face == "East-facing":
             value *= 1.07
         value *= 1 + balcony * 0.3
 
-        return str(int(value))  # Return the formatted prediction as a string
+        return format_indian_currency(
+            int(value)
+        )  # Return the formatted prediction as a string
     except Exception as e:
         return str(e)
 
